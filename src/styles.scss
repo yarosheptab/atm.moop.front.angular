@@ -1,1 +1,80 @@
-/* You can add global styles to this file, and also import other style files */
+@import './app/styles/variables.scss';
+
+@font-face {
+    font-family: "Windows Regular";
+    src: local("Windows Regular"), url("./assets/fonts/Windows Regular.ttf") format("truetype");
+}
+
+// reset default
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  outline: 0;
+}
+
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+svg {
+  vertical-align: middle;
+}
+
+img {
+  width: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.mat-icon {
+  overflow: unset !important;
+}
+// end reset default
+
+body {
+    background-color: $atm-background-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: "Pixelated MS Sans Serif",Arial;
+}
+
+app-root {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

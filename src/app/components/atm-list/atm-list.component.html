@@ -1,0 +1,10 @@
+<div class="atm-list">
+  <ul class="tree-view">
+    <li>ATM List</li>
+    <ul>
+      <li *ngFor="let atm of atmList; let i = index" [ngClass]="{'atm-list-item': true, 'atm-list-item__selected': (selectedIndex | async) === i}" (click)="selectItem(i)">
+        {{atm.id}}: {{atm.address}}
+      </li>
+    </ul>
+  </ul>
+</div>

@@ -1,0 +1,19 @@
+.atm-list {
+    width: 200px;
+    height: 100%;
+    position: relative;
+}
+
+.tree-view {
+    height: 100%;
+}
+
+.atm-list-item {
+
+    cursor: pointer;
+    &__selected {
+        outline: 1px dotted #00f;
+        background-color: navy;
+        color: #fff;
+    }
+}

@@ -1,0 +1,16 @@
+<div class="window" style="width: 500px; height: 200px;">
+  <div class="title-bar">
+    <div class="title-bar-text">ATM</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlex style="height: 100%;">
+      <app-atm-list fxFlex="45" [atmList]="atmList$ | async"></app-atm-list>
+      <app-atm-login fxFlex></app-atm-login>
+    </div>
+  </div>
+</div>
