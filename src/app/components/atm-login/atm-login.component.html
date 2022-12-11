@@ -1,11 +1,41 @@
-<div class="atm-login">
-  <div class="field-row">
-    <label for="cardNumber"><u>C</u>ard number:</label>
-    <input fxFlex="60" id="cardNumber" [autocomplete]="false" type="text"/>
-  </div>
-  <!-- <div class="field-row">
-    <label for="pinCode"><u>P</u>in Code:</label>
-    <input fxFlex="60" id="pinCode" [autocomplete]="false"  type="password"/>
+<div class="atm-login" [formGroup]="loginForm">
+  <!-- <div class="error-border" *ngIf="loginForm.invalid">
+    <span *ngIf="loginForm">{{loginForm}}</span>
   </div> -->
-  <button style="margin-top: 10px; width: 50px;">Verify</button>
+    <div class="field-row">
+      <label for="cardNumber"><u>C</u>ard number:</label>
+      <input fxFlex="60" id="cardNumber" formControlName="cardNumber"  [autocomplete]="false" type="text"/>
+      <div class="error-border" fxFlex="100" *ngIf="loginForm.get('cardNumber')?.invalid && loginForm.get('cardNumber')?.touched">
+        {{loginForm.get('cardNumber').errors['minLength'] | json}}
+        <span *ngIf="loginForm.get('cardNumber').errors?.['minlength'] || loginForm.get('cardNumber').errors?.['maxlength']">
+          Card number lenght must be 16 characters.
+        </span>
+        <span *ngIf="loginForm.get('cardNumber').errors?.['required']">
+          Required.
+        </span>
+        <span *ngIf="loginForm.get('cardNumber').errors?.['invalidCard']">
+          This card is not supported by this ATM.
+        </span>
+        <span *ngIf="loginForm.get('cardNumber').errors?.['httpError']">
+          An error occured, try again later.
+        </span>
+      </div>
+    </div>
+    <div class="field-row" *ngIf="isVerified$ | async">
+      <label for="pinCode"><u>P</u>in Code:</label>
+      <input fxFlex="60" id="pinCode" formControlName="pinCode" type="password"/>
+      <div class="error-border" fxFlex="100" *ngIf="loginForm.get('pinCode')?.invalid && loginForm.get('pinCode')?.touched">
+        {{loginForm.get('pinCode').errors['minLength'] | json}}
+        <span *ngIf="loginForm.get('pinCode').errors?.['minlength'] || loginForm.get('pinCode').errors?.['maxlength']">
+          Pin code lenght must be 4 characters.
+        </span>
+        <span *ngIf="loginForm.get('pinCode').errors?.['required']">
+          Required.
+        </span>
+        <span *ngIf="loginForm.get('pinCode').errors?.['httpError']">
+          An error occured, try again later.
+        </span>
+      </div>
+    </div>
+    <button type="submit" [disabled]="!(selectedAtm$ | async)" (click)="submitAction()" style="margin-top: 10px; width: 50px;">{{(isVerified$ | async) ? 'Login' : 'Verify'}}</button>
 </div>

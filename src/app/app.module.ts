@@ -9,6 +9,8 @@ import { AtmListComponent } from './components/atm-list/atm-list.component';
 import { AtmHttpService } from './services/atm-http.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AtmLoginComponent } from './components/atm-login/atm-login.component';
+import { FormBuilder, FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { UtilsService } from './services/utils.service';
 
 @NgModule({
   declarations: [
@@ -21,10 +23,14 @@ import { AtmLoginComponent } from './components/atm-login/atm-login.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
-    AtmHttpService
+    AtmHttpService,
+    FormBuilder,
+    UtilsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AtmInfo, AtmStatus } from 'src/app/interfaces/app.interfaces';
 
@@ -43,6 +43,8 @@ export class AtmListComponent implements OnInit {
 
   selectedIndex = new BehaviorSubject<number | null>(null);
 
+  @Output() onAtmSelect = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class AtmListComponent implements OnInit {
   selectItem(index: number) {
     console.log(index);
     this.selectedIndex.next(index);
+    this.onAtmSelect.emit(this.atmList[index]);
   }
 
 }

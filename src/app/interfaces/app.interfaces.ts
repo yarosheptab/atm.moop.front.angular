@@ -10,7 +10,20 @@ export interface Bank {
   name: string;
 }
 
+export interface PlansResponse {
+  
+}
+
+export interface Plan {
+
+}
+
 export enum AtmStatus {
   IDLE = 'IDLE',
   // add
+}
+
+export enum AtmStates {
+  LOGIN = 'LOGIN',
+  MAIN_MENU = 'MAIN_MENU',
 }
