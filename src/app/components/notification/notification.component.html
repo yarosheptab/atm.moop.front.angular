@@ -1,0 +1,16 @@
+<div class="window atm-notification" style="width: 300px">
+  <div class="title-bar">
+    <div class="title-bar-text">Info</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <p>{{notifications$ | async}}</p>
+    <div>
+      <button (click)="closeWindow()">OK</button>
+    </div>
+  </div>
+</div>

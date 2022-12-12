@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AtmInfo, AtmStatus } from 'src/app/interfaces/app.interfaces';
+import { firstValueFrom, from, lastValueFrom, Observable, of, tap } from 'rxjs';
+import { Account, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan } from 'src/app/interfaces/app.interfaces';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from './utils.service';
 
@@ -17,37 +17,6 @@ constructor(
       const url = `${environment.backApi}/atm/all`;
 
       return this.http.get<AtmInfo[]>(url);
-
-      return of([
-          {
-            "id" : 1,
-            "address" : "Street numero uno",
-            "atmStatus" : AtmStatus.IDLE,
-            "banks" : [ {
-              "id" : 1,
-              "name" : "9 vbyv kozu kulakom"
-            } ]
-          }, {
-            "id" : 2,
-            "address" : "Street numero dos",
-            "atmStatus" : AtmStatus.IDLE,
-            "banks" : [ {
-              "id" : 1,
-              "name" : "9 vbyv kozu kulakom"
-            }, {
-              "id" : 2,
-              "name" : "Bank number2"
-            } ]
-          }, {
-            "id" : 3,
-            "address" : "Street numero uno",
-            "atmStatus" : AtmStatus.IDLE,
-            "banks" : [ {
-              "id" : 3,
-              "name" : "9 vbyv kozu kulakom"
-            } ]
-          }
-        ])
   }
 
   verifyAtm(cardNumber: string, atmId: number): Observable<void> {
@@ -55,20 +24,48 @@ constructor(
 
     // const headers = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
 
-    return this.http.post<void>(url, {cardNumber, atmId}, {withCredentials: true});
+    return this.http.post<void>(url, {cardNumber, atmId});
 
     // return of(undefined);
   }
 
-  loginToAtm(number: string, pin: string, atm: number): Observable<void> {
+  loginToAtm(number: string, pin: string, atm: number): Observable<any> {
     const url = `${environment.appUrl}/login`;
 
-    const headers = new HttpHeaders({'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/x-www-form-urlencoded'});
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
 
     return this.http.post<void>(url, this.utilsService.toUrlEncoded({number, pin, atm}), {headers});
   }
 
-  // getPlans() {
-  //   this.http.get(`${environment.backApi}/account/plans`, {headers, withCredentials: true})
-  // }
+  getAllAccounts(): Observable<Account[]> {
+    const url = `${environment.backApi}/account/all-my`;
+
+    return this.http.get<Account[]>(url);
+  }
+
+  logoutFromAtm(): Observable<void> {
+    const url = `${environment.appUrl}/logout`;
+
+    return this.http.post<void>(url, {}, {withCredentials: true});
+  }
+
+  getPlans(): Observable<PlansResponse> {
+    return this.http.get<PlansResponse>(`${environment.backApi}/account/plans`)
+  }
+
+  getCurrency(): Observable<Currencies> {
+    return this.http.get<Currencies>(`${environment.backApi}/account/currency`);
+  }
+
+  createSavingAccount(plan: number | string, currencyUnitCode: string, accountName: string): Observable<void> {
+    const url = `${environment.backApi}/account/saving/plan`;
+
+    return this.http.post<void>(url, {plan, currencyUnitCode, accountName});
+  }
+
+  createTransactionalAccount(plan: number | string, currencyUnitCode: string, accountName: string): Observable<void> {
+    const url = `${environment.backApi}/account/transactional/plan`;
+
+    return this.http.post<void>(url, {plan, currencyUnitCode, accountName});
+  }
 }

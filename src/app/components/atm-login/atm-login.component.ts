@@ -21,7 +21,7 @@ export class AtmLoginComponent implements OnInit {
     this.loginForm.disable();
    }
 
-  @Input() selectedAtm$!: BehaviorSubject<AtmInfo>;
+  @Input() selectedAtm$!: BehaviorSubject<AtmInfo | null>;
   @Output() afterLogin = new EventEmitter<void>();
 
   loginForm = this.fb.group(
@@ -33,28 +33,34 @@ export class AtmLoginComponent implements OnInit {
   isVerified$ = new BehaviorSubject<boolean>(false);
 
   ngOnInit() {
+    this.selectedAtm$.next(null);
+    this.accountService.cardNumber = null;
     this.selectedAtm$.subscribe(atm => {
       if (atm) {
         this.loginForm.enable();
         this.loginForm.reset();
         this.accountService.cardNumber = null;
       }
-      this.loginForm.patchValue({cardNumber: '', pinCode: ''});
+      this.loginForm.patchValue({cardNumber: '2440735783328557', pinCode: '5384'});
       this.isVerified$.next(false);
     });
 
     this.loginForm.get('cardNumber')?.valueChanges.subscribe(val => {
-      this.loginForm.get('cardNumber')?.setValue(this.loginForm.get('cardNumber')?.value?.replace(/\s/g, '') ?? '', {emitEvent: false});
+      this.loginForm.get('cardNumber')?.setValue(val?.replace(/\s/g, '') ?? '', {emitEvent: false});
     })
   }
 
   submitAction() {
+    // this.loginForm.markAllAsTouched();
+
     if (this.loginForm.get('cardNumber')?.invalid ||
-      (this.loginForm.get('pinCode')?.invalid && this.isVerified$.value)) {
-      return;
+      (this.loginForm.get('pinCode')?.invalid && this.isVerified$.value) ||
+      !this.selectedAtm$.value?.id) {
+        this.loginForm.markAllAsTouched();
+        return;
     }
 
-    if (!this.isVerified$.value) {
+    if (!this.isVerified$.value && this.selectedAtm$.value?.id) {
       this.loginForm.get('cardNumber')?.markAllAsTouched();
       this.atmHttpService.verifyAtm(this.loginForm.get('cardNumber')?.value!, this.selectedAtm$.value.id)
       .subscribe(
@@ -66,12 +72,12 @@ export class AtmLoginComponent implements OnInit {
           },
           error: err => {
             if (err.status == 400) {
-              console.log(err);
               this.loginForm.get('cardNumber')?.setErrors({invalidCard: true});
               this.accountService.cardNumber = null;
             }
             else {
               this.loginForm.get('cardNumber')?.setErrors({httpError: true});
+              console.log(err);
             }
             this.isVerified$.next(false);
           }
@@ -86,11 +92,23 @@ export class AtmLoginComponent implements OnInit {
       this.loginForm.get('pinCode')!.value!,
       this.selectedAtm$.value.id
     )
-    .subscribe(() => {
-      this.afterLogin.emit();
-    })
-
-    console.log(this.loginForm.value);
+    .subscribe(
+      {
+        next: () => {
+          this.afterLogin.emit();
+        },
+        error: err => {
+          if (err.status == 400) {
+            this.loginForm.get('pinCode')?.setErrors({invalidPinCode: true}, {emitEvent: true});
+          }
+          else {
+            this.loginForm.get('pinCode')?.setErrors({httpError: true}, {emitEvent: true});
+          }
+          console.log(err);
+          this.isVerified$.next(true);
+        }
+      }
+    )
   }
 
 }

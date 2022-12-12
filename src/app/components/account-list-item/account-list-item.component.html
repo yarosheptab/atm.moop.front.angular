@@ -1,0 +1,15 @@
+<button class="account-info" *ngIf="account">
+  <!-- {{account | json}} -->
+  <div>
+    <span>{{account.accountName}}</span>
+    <span>#{{account.id}}</span>
+  </div>
+  <div>
+    <span>Type:</span>
+    <span>{{account.accountType}}</span>
+  </div>
+  <div>
+    <span>Balance:</span>
+    <span>{{account.balance.amount}} {{account.balance.currency}}</span>
+  </div>
+</button>

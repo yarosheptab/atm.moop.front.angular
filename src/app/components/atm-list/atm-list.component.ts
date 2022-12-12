@@ -51,7 +51,6 @@ export class AtmListComponent implements OnInit {
   }
 
   selectItem(index: number) {
-    console.log(index);
     this.selectedIndex.next(index);
     this.onAtmSelect.emit(this.atmList[index]);
   }

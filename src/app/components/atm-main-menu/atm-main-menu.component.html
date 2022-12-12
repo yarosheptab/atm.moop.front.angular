@@ -1,0 +1,13 @@
+<div class="atm-main-menu">
+  
+  <app-atm-header></app-atm-header>
+
+  <div class="button-list" >
+    <button (click)="navigationService.goTo(ATM_STATES.MY_ACCOUNTS)">My Accounts</button>
+    <button (click)="navigationService.goTo(ATM_STATES.NEW_TRANSACTION)">New Transaction</button>
+    <button (click)="navigationService.goTo(ATM_STATES.WITHDRAW)">Withdraw</button>
+    <button (click)="navigationService.goTo(ATM_STATES.DEPOSIT)">Deposit</button>
+    <button (click)="navigationService.goTo(ATM_STATES.TRANSACTION_HISTORY)">Transactions History</button>
+    <button (click)="navigationService.goTo(ATM_STATES.CARD_INFO)">Card Info</button>
+  </div>
+</div>

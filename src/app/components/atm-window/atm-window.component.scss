@@ -1,6 +1,7 @@
 .window {
     position: relative;
     padding-top: 20px;
+    resize: none;
 }
 
 .title-bar {
@@ -16,4 +17,8 @@
     padding: 8px;
     position: relative;
     box-sizing: border-box;
+
+    > div {
+        width: 100%;
+    }
 }

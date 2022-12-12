@@ -1,0 +1,27 @@
+.account-plan {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    button {
+        width: 80%;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        div {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &:disabled {
+            color: black;
+        }
+    }
+}

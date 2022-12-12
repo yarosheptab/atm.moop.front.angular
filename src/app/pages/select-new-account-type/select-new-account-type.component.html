@@ -1,0 +1,15 @@
+<app-atm-header [lastState]="ATM_STATES.MY_ACCOUNTS"></app-atm-header>
+<div class="plans" *ngIf="atmPlans$ | async">
+  <div class="transactional">
+    <p>Credit transactional</p>
+    <div class="transactional-list">
+      <app-account-plan-list-item [transactionalPlan]="plan" *ngFor="let plan of atmPlans$.value.plans.transactional"></app-account-plan-list-item>
+    </div>
+  </div>
+  <div class="saving">
+    <p>Saving</p>
+    <div class="saving-list">
+      <app-account-plan-list-item [savingPlan]="plan" *ngFor="let plan of atmPlans$.value.plans.saving"></app-account-plan-list-item>
+    </div>
+  </div>
+</div>

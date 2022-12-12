@@ -1,0 +1,21 @@
+.account-info {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px auto;
+    width: 80%;
+    height: 60px;
+    padding: 5px;
+
+    &:active {
+        padding: 5px;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+}

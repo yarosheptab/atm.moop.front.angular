@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AtmInfo, AtmStates } from 'src/app/interfaces/app.interfaces';
+import { AtmInfo, AtmState } from 'src/app/interfaces/app.interfaces';
 import { AccountService } from 'src/app/services/account.service';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-atm-window',
@@ -17,11 +18,14 @@ export class AtmWindowComponent implements OnInit {
 
   atmState$ = this.accountService.atmState$;
 
-  ATM_STATES = AtmStates;
+  notifications$ = this.notificationService.notification$;
+
+  ATM_STATES = AtmState;
 
   constructor(
     private atmHttpService: AtmHttpService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -32,12 +36,11 @@ export class AtmWindowComponent implements OnInit {
   }
 
   onAtmSelect(atm: AtmInfo) {
-    console.log(atm);
     this.selectedAtm$.next(atm);
   }
 
-  afterLogin(cardNumber: string) {
-    this.atmState$.next(AtmStates.MAIN_MENU);
+  afterLogin() {
+    this.atmState$.next(AtmState.MAIN_MENU);
   }
 
 }

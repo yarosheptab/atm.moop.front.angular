@@ -8,11 +8,22 @@
     </div>
   </div>
   <div class="window-body" [ngSwitch]="atmState$ | async">
-      <div *ngSwitchCase="ATM_STATES.LOGIN" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlex style="height: 100%;">
-        <app-atm-list (onAtmSelect)="onAtmSelect($event)" fxFlex="45" [atmList]="atmList$ | async"></app-atm-list>
-        <app-atm-login [selectedAtm$]="selectedAtm$" (afterLogin)="afterLogin()" fxFlex></app-atm-login>
-      </div>
-      <div *ngSwitchCase="ATM_STATES.MAIN_MENU">
-      </div>
+    <div *ngSwitchCase="ATM_STATES.LOGIN" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlex style="height: 100%;">
+      <app-atm-list (onAtmSelect)="onAtmSelect($event)" fxFlex="45" [atmList]="atmList$ | async"></app-atm-list>
+      <app-atm-login [selectedAtm$]="selectedAtm$" (afterLogin)="afterLogin()" fxFlex></app-atm-login>
+    </div>
+    <div *ngSwitchCase="ATM_STATES.MAIN_MENU">
+      <app-atm-main-menu></app-atm-main-menu>
+    </div>
+    <div *ngSwitchCase="ATM_STATES.MY_ACCOUNTS">
+      <app-my-accounts></app-my-accounts>
+    </div>
+    <div *ngSwitchCase="ATM_STATES.CHOOSE_PLAN">
+      <app-select-new-account-type></app-select-new-account-type>
+    </div>
+    <div *ngSwitchCase="ATM_STATES.NEW_ACCOUNT">
+      <app-new-account></app-new-account>
+    </div>
   </div>
+  <app-notification *ngIf="notifications$ | async"></app-notification>
 </div>

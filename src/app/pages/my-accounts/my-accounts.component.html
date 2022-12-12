@@ -1,0 +1,10 @@
+<div class="atm-my-accounts">
+  <app-atm-header [lastState]="ATM_STATES.MAIN_MENU"></app-atm-header>
+  <div class="my-accounts-features">
+    <button (click)="navigationService.goTo(ATM_STATES.CHOOSE_PLAN)">New Account</button>
+  </div>
+  <hr>
+  <div class="account-list">
+    <app-account-list-item fxFlex="50" [account]="account" *ngFor="let account of accounts$ | async; let i=index"></app-account-list-item>
+  </div>
+</div>

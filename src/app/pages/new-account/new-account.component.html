@@ -1,0 +1,35 @@
+<app-atm-header [lastState]="ATM_STATES.CHOOSE_PLAN"></app-atm-header>
+<div class="new-account-create">
+  <div class="transactional-account" *ngIf="transactionalPlan">
+    <app-account-plan-list-item [disabled]="true" [transactionalPlan]="transactionalPlan"></app-account-plan-list-item>
+  </div>
+  <div class="saving-account" *ngIf="savingPlan">
+    <app-account-plan-list-item [disabled]="true" [savingPlan]="savingPlan"></app-account-plan-list-item>
+  </div>
+  <div class="plan-form" [formGroup]="planForm">
+    <div class="field-row">
+      <label for="accountName"><u>A</u>ccount name:</label>
+      <input fxFlex="60" id="accountName" formControlName="accountName"  [autocomplete]="false" type="text"/>
+      <div class="error-border" fxFlex="100" *ngIf="planForm.get('accountName')?.invalid && planForm.get('accountName')?.touched">
+        <span *ngIf="planForm.get('accountName').errors?.['minlength'] || planForm.get('accountName').errors?.['maxlength']">
+          Card number lenght must be 16 characters.
+        </span>
+        <span *ngIf="planForm.get('accountName').errors?.['required']">
+          Required.
+        </span>
+        <span *ngIf="planForm.get('accountName').errors?.['httpError']">
+          An error occured, try again later.
+        </span>
+      </div>
+    </div>
+    <div class="field-row">
+      <label for="currency"><u>C</u>urrency</label>
+      <select fxFlex="60" id="currency" formControlName="currency">
+        <option *ngFor="let currency of currencyList">{{currency}}</option>
+      </select>
+    </div>
+    <div class="submit-row">
+      <button (click)="submitForm()">Create account</button>
+    </div>
+  </div>
+</div>

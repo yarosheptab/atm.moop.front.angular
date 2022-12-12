@@ -1,0 +1,34 @@
+<div class="account-plan">
+  <button *ngIf="transactionalPlan" (click)="selectPlan()" [disabled]="disabled">
+    <div>
+      <span>Credit plan:</span>
+      <span>{{transactionalPlan.planName}}</span>
+    </div>
+    <div>
+      <span>Credit limit:</span>
+      <span>{{transactionalPlan.creditMoneyAmount}}</span>
+    </div>
+    <div>
+      <span>Lending rate:</span>
+      <span>{{transactionalPlan.lendingRate}}%</span>
+    </div>
+  </button>
+  <button *ngIf="savingPlan" (click)="selectPlan()" [disabled]="disabled">
+    <div>
+      <span>Saving plan:</span>
+      <span>{{savingPlan.planName}}</span>
+    </div>
+    <div *ngIf="savingPlan.interestRate">
+      <span>Year interest rate:</span>
+      <span>{{savingPlan.interestRate}}</span>
+    </div>
+    <div *ngIf="savingPlan.paymentStepPeriod">
+      <span>Payment period:</span>
+      <span>{{savingPlan.paymentStepPeriod.period}}</span>
+    </div>
+    <div>
+      <span>Addition allowed:</span>
+      <span>{{savingPlan.additionAllowed ? 'Yes' : 'No'}}</span>
+    </div>
+  </button>
+</div>

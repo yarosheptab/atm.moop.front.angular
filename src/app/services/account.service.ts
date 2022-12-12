@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { AtmStates } from '../interfaces/app.interfaces';
+import { BehaviorSubject, filter, map, share, tap } from 'rxjs';
+import { AccountType, AtmState, SavingPlan, TransactionalPlan, TransactionType } from '../interfaces/app.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,41 @@ export class AccountService {
     return this._cardNumber;
   }
 
-  atmState$ = new BehaviorSubject<AtmStates>(AtmStates.LOGIN);
+  atmState$ = new BehaviorSubject<AtmState>(AtmState.LOGIN);
 
-constructor() { }
+  stateName$ = new BehaviorSubject<string>('');
+
+  newPlan$ = new BehaviorSubject<SavingPlan | TransactionalPlan | null>(null);
+
+  planType$ = new BehaviorSubject<AccountType | null>(null);
+
+constructor() {
+  this.newPlan$.pipe(filter(plan => !!plan)).subscribe(
+    plan => {
+      if (typeof (plan as SavingPlan).additionAllowed == 'undefined') {
+        this.planType$.next(AccountType.TRANSACTIONAL);
+      }
+      else if (typeof (plan as TransactionalPlan).creditMoneyAmount == 'undefined') {
+        this.planType$.next(AccountType.SAVING);
+      }
+    }
+  );
+  this.atmState$.subscribe(
+    state => {
+      if (state == AtmState.NEW_ACCOUNT) {
+        switch (this.planType$.value) {
+          case AccountType.SAVING:
+            this.stateName$.next('Create new saving account');
+            break;
+          case AccountType.TRANSACTIONAL:
+            this.stateName$.next('Create new transactional account');
+            break;
+        }
+        return;
+      }
+      this.stateName$.next(state);
+    }
+  );
+}
 
 }
