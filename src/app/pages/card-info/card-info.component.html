@@ -1,0 +1,37 @@
+<app-atm-header [lastState]="ATM_STATES.MAIN_MENU"></app-atm-header>
+<div class="atm-card-info" *ngIf="accountInfo">
+  <button class="atm-user-card" disabled>
+    <div class="name-section">
+      <!-- {{accountInfo | json}} -->
+      <span>Name:</span>
+      <span>{{accountInfo.card.user.firstName}} {{accountInfo.card.user.middleName ?? ''}} {{accountInfo.card.user.lastName ?? ''}}</span>
+    </div>
+    <div class="dob-section" *ngIf="accountInfo.card.user.birthdayDate">
+      <span>Date of birth:</span>
+      <span>{{accountInfo.card.user.birthdayDate | date: 'mediumDate'}}</span>
+    </div>
+    <div class="user-status-section">
+      <span>User status:</span>
+      <span>{{accountInfo.card.user.userStatus}}</span>
+    </div>
+    <div class="card-section">
+      <span>Card number:</span>
+      <span>{{userCard}}</span>
+    </div>
+    <div class="card-status-section">
+      <span>Card status:</span>
+      <span>{{accountInfo.card.cardStatus}}</span>
+    </div>
+    <div class="atm-section">
+      <span>ATM address:</span>
+      <span>{{accountInfo.atm.address}}</span>
+    </div>
+    <div class="bank-section">
+      <span>Bank:</span>
+      <span>{{accountInfo.card.bank.name}}</span>
+    </div>
+  </button>
+  <div class="page-features">
+    <button (click)="changePinCode()">Change Pin Code</button>
+  </div>
+</div>

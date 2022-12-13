@@ -1,0 +1,29 @@
+.atm-card-info {
+    height: 90%;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.atm-user-card {
+    width: 70%;
+    height: inherit;
+    font-size: 14px;
+    color: black;
+    margin: auto;
+    box-sizing: border-box;
+
+    > div {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px auto;
+    }
+}
+
+.page-features {
+    height: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}

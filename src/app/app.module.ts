@@ -26,6 +26,8 @@ import { WithdrawComponent } from './pages/withdraw/withdraw.component';
 import { DepositComponent } from './pages/deposit/deposit.component';
 import { TransactionsHistoryComponent } from './pages/transactions-history/transactions-history.component';
 import { TransactionListItemComponent } from './components/transaction-list-item/transaction-list-item.component';
+import { CardInfoComponent } from './pages/card-info/card-info.component';
+import { ChangePinCodeComponent } from './pages/change-pin-code/change-pin-code.component';
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { TransactionListItemComponent } from './components/transaction-list-item
     WithdrawComponent,
     DepositComponent,
     TransactionsHistoryComponent,
-    TransactionListItemComponent
+    TransactionListItemComponent,
+    CardInfoComponent,
+    ChangePinCodeComponent
   ],
   imports: [
     BrowserModule,

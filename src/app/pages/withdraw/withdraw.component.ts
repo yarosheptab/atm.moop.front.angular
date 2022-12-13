@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { catchError, EMPTY } from 'rxjs';
 import { AtmState } from 'src/app/interfaces/app.interfaces';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -21,6 +22,10 @@ export class WithdrawComponent implements OnInit {
     private navigationService: NavigationService
   ) { }
 
+  httpErrors = {
+    amount: ''
+  }
+
   amountForm = this.fb.group({
     amount: new FormControl(0, [Validators.required, Validators.min(1)])
   });
@@ -35,6 +40,13 @@ export class WithdrawComponent implements OnInit {
     }
 
     this.atmHttpService.withdraw(this.amountForm.get('amount')!.value!)
+      .pipe(catchError(err => {
+        if (err.status === 400) {
+          this.amountForm.get('amount')?.setErrors({httpError: true});
+          this.httpErrors.amount = err.error.message;
+        }
+        return EMPTY;
+      }))
       .subscribe(() => {
         this.notificationService.notification$.next('Withdraw was successfull!');
         this.navigationService.goTo(AtmState.MAIN_MENU);

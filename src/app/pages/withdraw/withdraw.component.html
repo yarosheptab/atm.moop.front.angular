@@ -11,7 +11,7 @@
         Required.
       </span>
       <span *ngIf="amountForm.get('amount').errors?.['httpError']">
-        An error occured, try again later.
+        {{httpErrors.amount}}
       </span>
     </div>
   </div>

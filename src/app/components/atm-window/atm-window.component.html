@@ -33,6 +33,12 @@
     <div *ngSwitchCase="ATM_STATES.TRANSACTION_HISTORY">
       <app-transactions-history></app-transactions-history>
     </div>
+    <div *ngSwitchCase="ATM_STATES.CARD_INFO">
+      <app-card-info></app-card-info>
+    </div>
+    <div *ngSwitchCase="ATM_STATES.CHANGE_PIN">
+      <app-change-pin-code></app-change-pin-code>
+    </div>
   </div>
   <app-notification *ngIf="notifications$ | async"></app-notification>
 </div>

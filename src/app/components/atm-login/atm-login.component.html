@@ -9,11 +9,8 @@
         <span *ngIf="loginForm.get('cardNumber').errors?.['required']">
           Required.
         </span>
-        <span *ngIf="loginForm.get('cardNumber').errors?.['invalidCard']">
-          This card is not supported by this ATM.
-        </span>
         <span *ngIf="loginForm.get('cardNumber').errors?.['httpError']">
-          An error occured, try again later.
+          {{httpErrors.cardNumber}}
         </span>
       </div>
     </div>
@@ -27,11 +24,11 @@
         <span *ngIf="loginForm.get('pinCode').errors?.['required']">
           Required.
         </span>
-        <span *ngIf="loginForm.get('pinCode').errors?.['invalidPinCode']">
-          Pin code is incorrect.
+        <span *ngIf="loginForm.get('pinCode').errors?.['pattern']">
+          Invalid pin code. Should be 4 digits.
         </span>
         <span *ngIf="loginForm.get('pinCode').errors?.['httpError']">
-          An error occured, try again later.
+          {{httpErrors.pinCode}}
         </span>
       </div>
     </div>

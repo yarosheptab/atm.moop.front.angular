@@ -53,6 +53,11 @@ export interface Account {
   lendingAvailable: boolean;
 }
 
+export interface AccountInfo {
+  card: Card;
+  atm: AtmInfo;
+}
+
 export interface BalanceInfo {
   currency: string;
   amount: number;
@@ -117,7 +122,8 @@ export enum AtmState {
   CARD_INFO = 'Card info',
   NEW_ACCOUNT = 'New account',
   CHOOSE_PLAN = 'Choose your plan',
-  ACCOUNT_INFO = 'Account info'
+  ACCOUNT_INFO = 'Account info',
+  CHANGE_PIN = 'Change pin code'
 }
 
 export enum CardStatus {

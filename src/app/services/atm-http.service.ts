@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, from, lastValueFrom, Observable, of, tap } from 'rxjs';
-import { Account, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, Transaction } from 'src/app/interfaces/app.interfaces';
+import { Account, AccountInfo, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, Transaction } from 'src/app/interfaces/app.interfaces';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from './utils.service';
 
@@ -22,11 +22,7 @@ constructor(
   verifyAtm(cardNumber: string, atmId: number): Observable<void> {
     const url = `${environment.backApi}/card/verify-atm-support-bank`;
 
-    // const headers = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
-
     return this.http.post<void>(url, {cardNumber, atmId});
-
-    // return of(undefined);
   }
 
   loginToAtm(number: string, pin: string, atm: number): Observable<any> {
@@ -41,6 +37,12 @@ constructor(
     const url = `${environment.backApi}/account/all-my`;
 
     return this.http.get<Account[]>(url);
+  }
+
+  getAccountInfo(): Observable<AccountInfo> {
+    const url = `${environment.backApi}/account/auth`;
+
+    return this.http.get<AccountInfo>(url);
   }
 
   logoutFromAtm(): Observable<void> {
@@ -85,5 +87,11 @@ constructor(
     const url = `${environment.backApi}/transaction/history`;
 
     return this.http.get<Transaction[]>(url);
+  }
+
+  changePinCode(pin: string): Observable<void> {
+    const url = `${environment.backApi}/card/update-pin`;
+
+    return this.http.put<void>(url, {pin});
   }
 }
