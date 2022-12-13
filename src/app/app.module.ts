@@ -22,6 +22,10 @@ import { AccountPlanListItemComponent } from './components/account-plan-list-ite
 import { NewAccountComponent } from './pages/new-account/new-account.component';
 import { NotificationService } from './services/notification.service';
 import { NotificationComponent } from './components/notification/notification.component';
+import { WithdrawComponent } from './pages/withdraw/withdraw.component';
+import { DepositComponent } from './pages/deposit/deposit.component';
+import { TransactionsHistoryComponent } from './pages/transactions-history/transactions-history.component';
+import { TransactionListItemComponent } from './components/transaction-list-item/transaction-list-item.component';
 
 
 @NgModule({
@@ -37,7 +41,11 @@ import { NotificationComponent } from './components/notification/notification.co
     SelectNewAccountTypeComponent,
     AccountPlanListItemComponent,
     NewAccountComponent,
-    NotificationComponent
+    NotificationComponent,
+    WithdrawComponent,
+    DepositComponent,
+    TransactionsHistoryComponent,
+    TransactionListItemComponent
   ],
   imports: [
     BrowserModule,

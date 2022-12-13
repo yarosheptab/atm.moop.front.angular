@@ -62,14 +62,14 @@ export class NewAccountComponent implements OnInit, OnDestroy {
       this.atmHttpService.createSavingAccount(this.savingPlan.planName.toUpperCase(), this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
         .subscribe(() => {
           this.navigationService.goTo(AtmState.MAIN_MENU);
-          this.notificationService.notification$.next('Saving plan succesfully created!')
+          this.notificationService.notification$.next('Saving plan successfully created!')
         })
     }
     else if (this.transactionalPlan) {
       this.atmHttpService.createSavingAccount(this.transactionalPlan.planName.toUpperCase(), this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
         .subscribe(() => {
           this.navigationService.goTo(AtmState.MAIN_MENU);
-          this.notificationService.notification$.next('Transactional plan succesfully created!')
+          this.notificationService.notification$.next('Transactional plan successfully created!')
         })
     }
   }

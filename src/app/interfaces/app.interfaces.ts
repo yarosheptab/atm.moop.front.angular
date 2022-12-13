@@ -76,6 +76,17 @@ export interface Card {
 
 export type Currencies = string[];
 
+export interface Transaction {
+  transactionStatus: TransactionStatus;
+  startTime: number;
+  amount: BalanceInfo;
+  toAccount: {id: number};
+  fromAccount: {id: number};
+  transactionType: TransactionType;
+  modifyTime: number;
+  id: number;
+}
+
 export enum AtmStatus {
   IDLE = 'IDLE',
   DOWN = 'DOWN',
@@ -105,7 +116,8 @@ export enum AtmState {
   TRANSACTION_HISTORY = 'Transaction history',
   CARD_INFO = 'Card info',
   NEW_ACCOUNT = 'New account',
-  CHOOSE_PLAN = 'Choose your plan'
+  CHOOSE_PLAN = 'Choose your plan',
+  ACCOUNT_INFO = 'Account info'
 }
 
 export enum CardStatus {

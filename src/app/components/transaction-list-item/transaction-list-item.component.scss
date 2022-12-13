@@ -1,0 +1,19 @@
+.transaction-info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+        width: 90%;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .main-info, .additional-info {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<app-atm-header [lastState]="ATM_STATES.MAIN_MENU"></app-atm-header>
+<div class="atm-withdraw">
+  <div class="field-row" [formGroup]="amountForm">
+    <label for="amount"><u>A</u>mount:</label>
+    <input fxFlex="60" id="amount" formControlName="amount" type="number"/>
+    <div class="error-border" fxFlex="100" *ngIf="amountForm.get('amount')?.invalid && amountForm.get('amount')?.touched">
+      <span *ngIf="amountForm.get('amount').errors?.['min']">
+        Value should be positive.
+      </span>
+      <span *ngIf="amountForm.get('amount').errors?.['required']">
+        Required.
+      </span>
+      <span *ngIf="amountForm.get('amount').errors?.['httpError']">
+        An error occured, try again later.
+      </span>
+    </div>
+  </div>
+  <div class="submit-row">
+    <button (click)="submitForm()">Deposit</button>
+  </div>
+</div>

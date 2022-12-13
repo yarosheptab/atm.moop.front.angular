@@ -1,0 +1,13 @@
+<div class="transaction-info" *ngIf="transaction">
+  <button>
+    <div class="main-info">
+      <span>Transaction #{{transaction.id}}</span>
+      <span>Created: {{transaction.startTime | date : 'short'}}</span>
+    </div>
+    <div class="additional-info">
+      <span>From: {{transaction.fromAccount.id}}</span>
+      <span>Amount: {{transaction.amount?.amount}} {{transaction.amount?.currency}}</span>
+      <span>To: {{transaction.toAccount.id}}</span>
+    </div>
+  </button>
+</div>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, from, lastValueFrom, Observable, of, tap } from 'rxjs';
-import { Account, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan } from 'src/app/interfaces/app.interfaces';
+import { Account, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, Transaction } from 'src/app/interfaces/app.interfaces';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from './utils.service';
 
@@ -67,5 +67,23 @@ constructor(
     const url = `${environment.backApi}/account/transactional/plan`;
 
     return this.http.post<void>(url, {plan, currencyUnitCode, accountName});
+  }
+
+  withdraw(amount: number): Observable<void> {
+    const url = `${environment.backApi}/transfer/withdraw`;
+
+    return this.http.post<void>(url, {amount});
+  }
+
+  deposit(amount: number): Observable<void> {
+    const url = `${environment.backApi}/transfer/deposit`;
+
+    return this.http.post<void>(url, {amount});
+  }
+
+  getTransactionsHistory(): Observable<Transaction[]> {
+    const url = `${environment.backApi}/transaction/history`;
+
+    return this.http.get<Transaction[]>(url);
   }
 }
