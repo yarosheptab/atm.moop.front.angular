@@ -17,25 +17,5 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    console.log({} as SavingPlan);
-
-    // const headers = new HttpHeaders({'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/x-www-form-urlencoded'});
-
-    // this.http.post(
-    //   `${environment.backApi}/login`,
-    //   'number=2440735783328557&pin=5384&atm=1', //{"number": 2440735783328557, "pin": 5384, "atm": 1},
-    //   {headers}
-    // )
-    // // of('')
-    // .pipe(
-    //   switchMap(res => {
-    //     console.log(res);
-    //     return this.http.get(`${environment.backApi}/account/plans`, {headers, withCredentials: true})
-    //   })
-    // )
-    // .subscribe(e => {
-    //   console.log(e);
-    // })
   }
 }

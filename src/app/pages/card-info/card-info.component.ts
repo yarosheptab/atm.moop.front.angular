@@ -26,7 +26,6 @@ export class CardInfoComponent implements OnInit {
     this.atmHttpService.getAccountInfo()
       .subscribe(data => {
         this.accountInfo = data;
-        console.log(data);
       });
   }
 

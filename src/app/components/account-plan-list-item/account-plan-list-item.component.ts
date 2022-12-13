@@ -12,6 +12,7 @@ export class AccountPlanListItemComponent implements OnInit {
   @Input() disabled: boolean = false;
   @Input() transactionalPlan?: TransactionalPlan;
   @Input() savingPlan?: SavingPlan;
+  @Input() index?: number;
 
   constructor(
     private accountService: AccountService
@@ -23,11 +24,11 @@ export class AccountPlanListItemComponent implements OnInit {
 
   selectPlan() {
     if (this.savingPlan) {
-      this.accountService.newPlan$.next(this.savingPlan);
+      this.accountService.newPlan$.next({plan: this.savingPlan, index: this.index!});
       this.accountService.atmState$.next(AtmState.NEW_ACCOUNT)
     }
     else if (this.transactionalPlan) {
-      this.accountService.newPlan$.next(this.transactionalPlan);
+      this.accountService.newPlan$.next({plan: this.transactionalPlan, index: this.index!});
       this.accountService.atmState$.next(AtmState.NEW_ACCOUNT)
     }
   }

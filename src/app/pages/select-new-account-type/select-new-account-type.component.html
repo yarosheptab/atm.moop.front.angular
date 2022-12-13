@@ -3,13 +3,13 @@
   <div class="transactional">
     <p>Credit transactional</p>
     <div class="transactional-list">
-      <app-account-plan-list-item [transactionalPlan]="plan" *ngFor="let plan of atmPlans$.value.plans.transactional"></app-account-plan-list-item>
+      <app-account-plan-list-item [index]="i" [transactionalPlan]="plan" *ngFor="let plan of atmPlans$.value.plans.transactional; let i = index"></app-account-plan-list-item>
     </div>
   </div>
   <div class="saving">
     <p>Saving</p>
     <div class="saving-list">
-      <app-account-plan-list-item [savingPlan]="plan" *ngFor="let plan of atmPlans$.value.plans.saving"></app-account-plan-list-item>
+      <app-account-plan-list-item [index]="i" [savingPlan]="plan" *ngFor="let plan of atmPlans$.value.plans.saving; let i = index"></app-account-plan-list-item>
     </div>
   </div>
 </div>

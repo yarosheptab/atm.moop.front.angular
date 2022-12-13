@@ -34,8 +34,6 @@ export class ChangePinCodeComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.pinCodeForm.get('pinCode')?.errors);
-
     if (this.pinCodeForm.get('pinCode')?.value && this.pinCodeForm.get('pinCode')?.invalid) {
       this.pinCodeForm.markAllAsTouched();
       return;

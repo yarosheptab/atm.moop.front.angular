@@ -94,4 +94,10 @@ constructor(
 
     return this.http.put<void>(url, {pin});
   }
+
+  createNewTransferFromTransaction(amount: number, senderAccountId: number, receiverAccountId: number): Observable<void> {
+    const url = `${environment.backApi}/transfer`;
+
+    return this.http.put<void>(url, {amount, senderAccountId, receiverAccountId});
+  }
 }

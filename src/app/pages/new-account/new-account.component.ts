@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { filter } from 'rxjs';
 import { AccountType, AtmState, Currencies, SavingPlan, TransactionalPlan } from 'src/app/interfaces/app.interfaces';
 import { AccountService } from 'src/app/services/account.service';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
@@ -15,6 +16,7 @@ export class NewAccountComponent implements OnInit, OnDestroy {
 
   transactionalPlan?: TransactionalPlan;
   savingPlan?: SavingPlan;
+  index: number = -1;
 
   ATM_STATES = AtmState;
 
@@ -34,14 +36,17 @@ export class NewAccountComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.accountService.newPlan$.subscribe(plan => {
+    this.accountService.newPlan$
+    .pipe(filter(res => !!res))
+    .subscribe(data => {
 
       if (this.accountService.planType$.value === AccountType.TRANSACTIONAL) {
-        this.transactionalPlan = plan as TransactionalPlan;
+        this.transactionalPlan = data?.plan as TransactionalPlan;
       }
       else if (this.accountService.planType$.value === AccountType.SAVING) {
-        this.savingPlan = plan as SavingPlan;
+        this.savingPlan = data?.plan as SavingPlan;
       }
+      this.index = data?.index ?? -1;
     });
 
     this.atmHttpService.getCurrency()
@@ -59,14 +64,14 @@ export class NewAccountComponent implements OnInit, OnDestroy {
     }
 
     if (this.savingPlan) {
-      this.atmHttpService.createSavingAccount(this.savingPlan.planName.toUpperCase(), this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
+      this.atmHttpService.createSavingAccount(this.index, this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
         .subscribe(() => {
           this.navigationService.goTo(AtmState.MAIN_MENU);
           this.notificationService.notification$.next('Saving plan successfully created!')
         })
     }
     else if (this.transactionalPlan) {
-      this.atmHttpService.createSavingAccount(this.transactionalPlan.planName.toUpperCase(), this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
+      this.atmHttpService.createTransactionalAccount(this.index, this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
         .subscribe(() => {
           this.navigationService.goTo(AtmState.MAIN_MENU);
           this.notificationService.notification$.next('Transactional plan successfully created!')

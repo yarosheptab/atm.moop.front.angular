@@ -19,7 +19,6 @@ export class AtmHeaderComponent implements OnInit {
   ) {
     this.currentState$.pipe(
       map(state => {
-        console.log(state);
         if (state == this.ATM_STATES.NEW_ACCOUNT) {
           switch (this.accountService.planType$.value) {
             case AccountType.SAVING:

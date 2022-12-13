@@ -21,17 +21,17 @@ export class AccountService {
 
   stateName$ = new BehaviorSubject<string>('');
 
-  newPlan$ = new BehaviorSubject<SavingPlan | TransactionalPlan | null>(null);
+  newPlan$ = new BehaviorSubject<{plan: SavingPlan | TransactionalPlan, index: number} | null>(null);
 
   planType$ = new BehaviorSubject<AccountType | null>(null);
 
 constructor() {
   this.newPlan$.pipe(filter(plan => !!plan)).subscribe(
-    plan => {
-      if (typeof (plan as SavingPlan).additionAllowed == 'undefined') {
+    data => {
+      if (typeof (data?.plan as SavingPlan).additionAllowed == 'undefined') {
         this.planType$.next(AccountType.TRANSACTIONAL);
       }
-      else if (typeof (plan as TransactionalPlan).creditMoneyAmount == 'undefined') {
+      else if (typeof (data?.plan as TransactionalPlan).creditMoneyAmount == 'undefined') {
         this.planType$.next(AccountType.SAVING);
       }
     }

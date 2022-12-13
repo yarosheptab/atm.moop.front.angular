@@ -3,7 +3,7 @@
   <div class="field-row" [formGroup]="amountForm">
     <label for="amount"><u>A</u>mount:</label>
     <input fxFlex="60" id="amount" formControlName="amount" type="number"/>
-    <div class="error-border" fxFlex="100" *ngIf="amountForm.get('amount')?.invalid && amountForm.get('amount')?.touched">
+    <div class="error-border" fxLayoutAlign="flex-end center" fxFlex="100" *ngIf="amountForm.get('amount')?.invalid && amountForm.get('amount')?.touched">
       <span *ngIf="amountForm.get('amount').errors?.['min']">
         Value should be positive.
       </span>

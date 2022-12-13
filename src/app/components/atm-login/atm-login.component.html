@@ -2,7 +2,7 @@
     <div class="field-row">
       <label for="cardNumber"><u>C</u>ard number:</label>
       <input fxFlex="60" id="cardNumber" formControlName="cardNumber"  [autocomplete]="false" type="text"/>
-      <div class="error-border" fxFlex="100" *ngIf="loginForm.get('cardNumber')?.invalid && loginForm.get('cardNumber')?.touched">
+      <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="loginForm.get('cardNumber')?.invalid && loginForm.get('cardNumber')?.touched">
         <span *ngIf="loginForm.get('cardNumber').errors?.['minlength'] || loginForm.get('cardNumber').errors?.['maxlength']">
           Card number lenght must be 16 characters.
         </span>
@@ -17,7 +17,7 @@
     <div class="field-row" *ngIf="isVerified$ | async">
       <label for="pinCode"><u>P</u>in Code:</label>
       <input fxFlex="60" id="pinCode" formControlName="pinCode" type="password"/>
-      <div class="error-border" fxFlex="100" *ngIf="loginForm.get('pinCode')?.invalid && loginForm.get('pinCode')?.touched">
+      <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="loginForm.get('pinCode')?.invalid && loginForm.get('pinCode')?.touched">
         <span *ngIf="loginForm.get('pinCode').errors?.['minlength'] || loginForm.get('pinCode').errors?.['maxlength']">
           Pin code lenght must be 4 characters.
         </span>

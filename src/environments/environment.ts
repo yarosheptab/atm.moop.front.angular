@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   get appUrl(): string {
     return 'http://localhost:8080';
-    // return 'https://f379-212-90-62-127.eu.ngrok.io';
+    // return 'https://4a54-212-90-62-127.eu.ngrok.io';
   },
   get backApi(): string {
     return `${this.appUrl}/api`

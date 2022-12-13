@@ -10,9 +10,9 @@
     <div class="field-row">
       <label for="accountName"><u>A</u>ccount name:</label>
       <input fxFlex="60" id="accountName" formControlName="accountName"  [autocomplete]="false" type="text"/>
-      <div class="error-border" fxFlex="100" *ngIf="planForm.get('accountName')?.invalid && planForm.get('accountName')?.touched">
+      <div class="error-border" fxLayoutAlign="flex-end center" fxFlex="100" *ngIf="planForm.get('accountName')?.invalid && planForm.get('accountName')?.touched">
         <span *ngIf="planForm.get('accountName').errors?.['minlength'] || planForm.get('accountName').errors?.['maxlength']">
-          Account name lenght should be from 1 to 64 characters characters.
+          Account name lenght should be from 3 to 64 characters characters.
         </span>
         <span *ngIf="planForm.get('accountName').errors?.['required']">
           Required.

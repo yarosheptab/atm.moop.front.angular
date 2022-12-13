@@ -73,7 +73,6 @@ export class AtmLoginComponent implements OnInit {
           this.loginForm.get('cardNumber')?.setErrors({httpError: true});
           this.httpErrors.cardNumber = err.error?.message ?? '';
           this.accountService.cardNumber = null;
-          console.log( this.httpErrors.cardNumber);
           this.isVerified$.next(false);
           return EMPTY;
         })

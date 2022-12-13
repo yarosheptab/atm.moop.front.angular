@@ -3,7 +3,7 @@
   <div class="field-row" [formGroup]="pinCodeForm">
     <label for="pinCode"><u>N</u>ew pin code:</label>
     <input fxFlex="60" id="pinCode" formControlName="pinCode" type="password"/>
-    <div class="error-border" fxFlex="100" *ngIf="pinCodeForm.get('pinCode')?.invalid && pinCodeForm.get('pinCode')?.touched">
+    <div class="error-border" fxLayoutAlign="flex-end center" fxFlex="100" *ngIf="pinCodeForm.get('pinCode')?.invalid && pinCodeForm.get('pinCode')?.touched">
       <span *ngIf="pinCodeForm.get('pinCode').errors?.['minLength'] || pinCodeForm.get('pinCode').errors?.['maxLength']">
         Pin code should be 4 characters lenght.
       </span>
