@@ -100,4 +100,16 @@ constructor(
 
     return this.http.put<void>(url, {amount, senderAccountId, receiverAccountId});
   }
+
+  createScheduledTransaction(amount: number, senderAccountId: number, receiverAccountId: number, scheduledTime: number): Observable<void> {
+    const url = `${environment.backApi}/transaction/scheduled`;
+
+    return this.http.post<void>(url, {amount, senderAccountId, receiverAccountId, scheduledTime});
+  }
+
+  createRegularTransaction(regularData: Record<string, any>): Observable<void> {
+    const url = `${environment.backApi}/transaction/regular`;
+
+    return this.http.post<void>(url, regularData);
+  }
 }

@@ -5,12 +5,12 @@
   </div>
   <div class="new-transaction-form" [formGroup]="transactionForm" *ngIf="accounts.length">
     <div class="field-row">
-      <label for="senderAccountid"><u>S</u>ender account:</label>
-      <select fxFlex="60" name="senderAccountid" formControlName="senderAccountid" id="senderAccountid">
+      <label for="senderAccountDd"><u>S</u>ender account:</label>
+      <select fxFlex="60" name="senderAccountDd" formControlName="senderAccountDd" id="senderAccountDd">
         <option *ngFor="let account of accounts" [value]="account.id">{{account.accountName}}</option>
       </select>
-      <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="transactionForm.get('senderAccountid')?.invalid && transactionForm.get('senderAccountid')?.touched">
-        <span *ngIf="transactionForm.get('senderAccountid').errors?.['required']">
+      <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="transactionForm.get('senderAccountDd')?.invalid && transactionForm.get('senderAccountDd')?.touched">
+        <span *ngIf="transactionForm.get('senderAccountDd').errors?.['required']">
           Required.
         </span>
       </div>
@@ -58,9 +58,9 @@
         fxFlex="100"
         fxLayoutAlign="flex-end center"
         *ngIf="(transactionForm.get('period')?.invalid && transactionForm.get('period')?.touched) ||
-          (transactionForm.get('inittialRepeats')?.invalid && transactionForm.get('inittialRepeats')?.touched)"
+          (transactionForm.get('initialRepeats')?.invalid && transactionForm.get('initialRepeats')?.touched)"
       >
-        <span *ngIf="transactionForm.get('period').errors?.['required'] || transactionForm.get('inittialRepeats').errors?.['required']">
+        <span *ngIf="transactionForm.get('period').errors?.['required'] || transactionForm.get('initialRepeats').errors?.['required']">
           Required.
         </span>
       </div>
@@ -69,16 +69,16 @@
       <label></label>
       <div fxFlex="60" fxLayoutAlign="space-between center">
         <label for="period"><img height="12px" (click)="repeatGuide()" style="aspect-ratio: 1; cursor: pointer;" src="https://img.icons8.com/pixels/512/experimental-info-pix.png" alt="Info"><u>I</u>nitial repeats:</label>
-        <input fxFlex="60" id="inittialRepeats" formControlName="inittialRepeats" type="text"/>
+        <input fxFlex="60" id="initialRepeats" formControlName="initialRepeats" type="text"/>
       </div>
       <div
         class="error-border"
         fxFlex="100"
         fxLayoutAlign="flex-end center"
         *ngIf="(transactionForm.get('period')?.invalid && transactionForm.get('period')?.touched) ||
-          (transactionForm.get('inittialRepeats')?.invalid && transactionForm.get('inittialRepeats')?.touched)"
+          (transactionForm.get('initialRepeats')?.invalid && transactionForm.get('initialRepeats')?.touched)"
       >
-        <span *ngIf="transactionForm.get('period').errors?.['required'] || transactionForm.get('inittialRepeats').errors?.['required']">
+        <span *ngIf="transactionForm.get('period').errors?.['required'] || transactionForm.get('initialRepeats').errors?.['required']">
           Required.
         </span>
       </div>
