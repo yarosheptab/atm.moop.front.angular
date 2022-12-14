@@ -1,4 +1,4 @@
-<button class="account-info" *ngIf="account">
+<button class="account-info" *ngIf="account" (click)="openAccountInfo()">
   <div>
     <span>{{account.accountName}}</span>
     <span>#{{account.id}}</span>

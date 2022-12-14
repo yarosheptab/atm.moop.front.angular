@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AtmState } from 'src/app/interfaces/app.interfaces';
+import { AccountService } from 'src/app/services/account.service';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 
@@ -17,9 +18,11 @@ export class MyAccountsComponent implements OnInit {
   constructor(
     private atmHttpService: AtmHttpService,
     public navigationService: NavigationService,
+    private accountService: AccountService,
   ) { }
 
   ngOnInit() {
+    this.accountService.selectedAccount$.next(null);
   }
 
 }

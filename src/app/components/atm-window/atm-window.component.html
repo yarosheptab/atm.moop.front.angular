@@ -42,6 +42,9 @@
     <div *ngSwitchCase="ATM_STATES.NEW_TRANSACTION">
       <app-new-transaction></app-new-transaction>
     </div>
+    <div *ngSwitchCase="ATM_STATES.ACCOUNT_INFO">
+      <app-account-info></app-account-info>
+    </div>
   </div>
   <app-notification *ngIf="notifications$ | async"></app-notification>
 </div>

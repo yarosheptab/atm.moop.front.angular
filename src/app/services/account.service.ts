@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, map, share, tap } from 'rxjs';
-import { AccountType, AtmState, SavingPlan, TransactionalPlan, TransactionType } from '../interfaces/app.interfaces';
+import { Account, AccountType, AtmState, SavingPlan, TransactionalPlan, TransactionType } from '../interfaces/app.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,8 @@ export class AccountService {
   atmState$ = new BehaviorSubject<AtmState>(AtmState.LOGIN);
 
   stateName$ = new BehaviorSubject<string>('');
+
+  selectedAccount$ = new BehaviorSubject<Account | null>(null);
 
   newPlan$ = new BehaviorSubject<{plan: SavingPlan | TransactionalPlan, index: number} | null>(null);
 
@@ -47,6 +49,21 @@ constructor() {
             this.stateName$.next('Create new transactional account');
             break;
         }
+        return;
+      }
+      else if (state == AtmState.ACCOUNT_INFO) {
+        switch (this.selectedAccount$.value?.accountType) {
+          case AccountType.SAVING:
+            this.stateName$.next(`Saving account #${this.selectedAccount$.value?.id}`);
+            break;
+          case AccountType.TRANSACTIONAL:
+            this.stateName$.next(`Transactional account #${this.selectedAccount$.value?.id}`);
+            break;
+          }
+        return;
+      }
+      else if (state == AtmState.CHANGE_ACCOUNT_PLAN) {
+        this.stateName$.next(`Change for saving account #${this.selectedAccount$.value?.id}`);
         return;
       }
       this.stateName$.next(state);

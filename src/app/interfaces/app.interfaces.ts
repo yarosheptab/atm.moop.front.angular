@@ -26,6 +26,7 @@ export interface Plan {
 }
 
 export interface SavingPlan extends Plan {
+  id: SavingPlanType;
   interestRate: number | null;
   paymentStepPeriod: SavingPlanPeriod | null;
   totalPeriod: SavingPlanPeriod | null;
@@ -34,6 +35,7 @@ export interface SavingPlan extends Plan {
 }
 
 export interface TransactionalPlan extends Plan {
+  id: TramsactionalPlanType;
   creditMoneyAmount: number;
   lendingRate: number;
   lendingAvailable: boolean;
@@ -47,10 +49,18 @@ export interface Account {
   balance: BalanceInfo;
   user: User;
   card: Card;
-  creditMoneyAmount: number;
-  landingRate: number;
+  creditMoneyAmount?: number;
+  lendingRate: number;
   default: boolean;
   lendingAvailable: boolean;
+  paymentStepsLeft?: number;
+  accumulateStartTime?: number;
+  autoRenewal?: boolean;
+  cumulativeAmount?: number;
+  currentEstimatedAmount?: number;
+  daysUntilNextPayment?: number;
+  capitalizationOn?: boolean;
+  savingAccountPlan: SavingPlan;
 }
 
 export interface AccountInfo {
@@ -67,15 +77,15 @@ export interface User {
   id: number;
   firstName: string;
   middleName: string | null;
-  lastName: string | null,
-  birthdayDate: string | null,
-  userStatus: UserStatus,
+  lastName: string | null;
+  birthdayDate: string | null;
+  userStatus: UserStatus;
 }
 
 export interface Card {
-  number: number,
-  cardStatus: CardStatus,
-  user: User,
+  number: number;
+  cardStatus: CardStatus;
+  user: User;
   bank: Bank
 }
 
@@ -123,7 +133,8 @@ export enum AtmState {
   NEW_ACCOUNT = 'New account',
   CHOOSE_PLAN = 'Choose your plan',
   ACCOUNT_INFO = 'Account info',
-  CHANGE_PIN = 'Change pin code'
+  CHANGE_PIN = 'Change pin code',
+  CHANGE_ACCOUNT_PLAN = 'Change plan'
 }
 
 export enum CardStatus {
@@ -151,4 +162,18 @@ export enum UserStatus {
   FROZEN = 'FROZEN',
   BLOCKED = 'BLOCKED',
   SUSPENDED = 'SUSPENDED'
+}
+
+export enum SavingPlanType {
+  PLAIN = 'PLAIN',
+  STANDARD = 'STANDARD',
+  LONG = 'LONG',
+  QUICK = 'QUICK',
+  EXTRA_QUICK = 'EXTRA_QUICK'
+}
+
+export enum TramsactionalPlanType {
+  PLAIN = 'PLAIN',
+  LIGHT = 'LIGHT',
+  MEDIUM = 'MEDIUM'
 }

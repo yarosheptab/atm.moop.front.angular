@@ -1,0 +1,47 @@
+.atm-account-info {
+    margin-top: 10px;
+    height: 90%;
+    button {
+        margin-top: 5px;
+        width: 60%;
+        height: inherit;
+        font-size: 14px;
+        color: black;
+        // margin: auto;
+        box-sizing: border-box;
+
+        > div {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px auto;
+        }
+    }
+
+    .transactional {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .saving {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .page-features {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        button {
+            margin-top: 0;
+            height: 100%;
+            width: auto;
+        }
+    }
+}
+
+.atm-account-settings {
+    display: flex;
+}

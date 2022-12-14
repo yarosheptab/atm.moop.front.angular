@@ -17,21 +17,6 @@ export class AtmHeaderComponent implements OnInit {
     private accountService: AccountService,
     public navigationService: NavigationService
   ) {
-    this.currentState$.pipe(
-      map(state => {
-        if (state == this.ATM_STATES.NEW_ACCOUNT) {
-          switch (this.accountService.planType$.value) {
-            case AccountType.SAVING:
-              return 'Create new saving account'
-            case AccountType.TRANSACTIONAL:
-              return 'Create new transactional account'
-            default:
-              return state;
-          }
-        }
-        return state + ' asd';
-      })
-    );
   }
 
   @Input() lastState?: AtmState;

@@ -1,11 +1,11 @@
 <div class="header-btn-container" >
-  <div fxFlex="33" style="text-align: start;">
+  <div fxFlex="20" style="text-align: start;">
     <button *ngIf="lastState" (click)="navigationService.goTo(lastState)">Back</button>
   </div>
-  <div fxFlex="33" style="text-align: center; font-size: 16px;">
+  <div fxFlex="60" style="text-align: center; font-size: 16px;">
     {{stateName$ | async}}
   </div>
-  <div fxFlex="33" style="text-align: end;">
+  <div fxFlex="20" style="text-align: end;">
     <button (click)="navigationService.goTo(ATM_STATES.LOGIN)">Exit</button>
   </div>
 </div>

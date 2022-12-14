@@ -1,0 +1,70 @@
+<app-atm-header [lastState]="ATM_STATES.MY_ACCOUNTS"></app-atm-header>
+<div class="atm-account-info" fxLayout="column" fxLayoutAlign="space-between center" *ngIf="(account$ | async) && !(isSettings$ | async)">
+  <div class="transactional" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.TRANSACTIONAL">
+    <button disabled>
+      <div class="name-section">
+        <span>Name:</span>
+        <span>{{(account$ | async).accountName}}</span>
+      </div>
+      <div class="balance-section">
+        <span>Balance:</span>
+        <span>{{(account$ | async).balance.amount}} {{(account$ | async).balance.currency}}</span>
+      </div>
+      <div class="credit-amount-section">
+        <span>Credit amount:</span>
+        <span>{{(account$ | async).creditMoneyAmount}} {{(account$ | async).balance.currency}}</span>
+      </div>
+      <div class="lending-rate-section">
+        <span>Lending rate:</span>
+        <span>{{(account$ | async).lendingRate}}</span>
+      </div>
+      <div class="is-default-section">
+        <span>Default?</span>
+        <span>{{(account$ | async).default ? 'Yes' : 'No'}}</span>
+      </div>
+    </button>
+  </div>
+  <div class="saving" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
+    <button disabled fxFlex="60">
+      <div class="name-section">
+        <span>Name:</span>
+        <span>{{(account$ | async).accountName}}</span>
+      </div>
+      <div class="safe-balance-section">
+        <span>Safe balance:</span>
+        <span>{{(account$ | async).balance.amount}} {{(account$ | async).balance.currency}}</span>
+      </div>
+      <div class="current-balance-section">
+        <span>Current balance:</span>
+        <span>{{(account$ | async).currentEstimatedAmount}} {{(account$ | async).balance.currency}}</span>
+      </div>
+      <div class="payments-left-section">
+        <span>Payments left:</span>
+        <span>{{(account$ | async).paymentStepsLeft}}</span>
+      </div>
+      <div class="next-payment-section">
+        <span>Next payment in:</span>
+        <span>{{(account$ | async).daysUntilNextPayment}} day(s)</span>
+      </div>
+      <div class="capitalization-section">
+        <span>Capitalization:</span>
+        <span>{{(account$ | async).capitalizationOn ? 'Yes' : 'No'}}</span>
+      </div>
+      <div class="autorenewal-section">
+        <span>Autorenewal:</span>
+        <span>{{(account$ | async).autorenewal ? 'Yes' : 'No'}}</span>
+      </div>
+    </button>
+    <app-account-plan-list-item fxFlex="40" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
+  </div>
+  <div class="page-features" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
+    <button (click)="openSettings(true)">Account settings/parameters</button>
+  </div>
+</div>
+
+<div class="atm-account-settings" *ngIf="(account$ | async) && (isSettings$ | async)">
+  <app-account-plan-list-item fxFlex="40" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
+  <div class="page-features" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
+    <button (click)="openSettings(false)">Account information</button>
+  </div>
+</div>

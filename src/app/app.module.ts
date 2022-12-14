@@ -29,6 +29,8 @@ import { TransactionListItemComponent } from './components/transaction-list-item
 import { CardInfoComponent } from './pages/card-info/card-info.component';
 import { ChangePinCodeComponent } from './pages/change-pin-code/change-pin-code.component';
 import { NewTransactionComponent } from './pages/new-transaction/new-transaction.component';
+import { AccountInfoComponent } from './pages/account-info/account-info.component';
+import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { NewTransactionComponent } from './pages/new-transaction/new-transaction
     TransactionListItemComponent,
     CardInfoComponent,
     ChangePinCodeComponent,
-    NewTransactionComponent
+    NewTransactionComponent,
+    AccountInfoComponent,
+    AccountSettingsComponent
   ],
   imports: [
     BrowserModule,
