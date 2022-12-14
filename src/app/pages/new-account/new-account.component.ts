@@ -16,7 +16,6 @@ export class NewAccountComponent implements OnInit, OnDestroy {
 
   transactionalPlan?: TransactionalPlan;
   savingPlan?: SavingPlan;
-  index: number = -1;
 
   ATM_STATES = AtmState;
 
@@ -38,15 +37,14 @@ export class NewAccountComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.accountService.newPlan$
     .pipe(filter(res => !!res))
-    .subscribe(data => {
+    .subscribe(plan => {
 
       if (this.accountService.planType$.value === AccountType.TRANSACTIONAL) {
-        this.transactionalPlan = data?.plan as TransactionalPlan;
+        this.transactionalPlan = plan as TransactionalPlan;
       }
       else if (this.accountService.planType$.value === AccountType.SAVING) {
-        this.savingPlan = data?.plan as SavingPlan;
+        this.savingPlan = plan as SavingPlan;
       }
-      this.index = data?.index ?? -1;
     });
 
     this.atmHttpService.getCurrency()
@@ -64,14 +62,14 @@ export class NewAccountComponent implements OnInit, OnDestroy {
     }
 
     if (this.savingPlan) {
-      this.atmHttpService.createSavingAccount(this.index, this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
+      this.atmHttpService.createSavingAccount(this.savingPlan.id, this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
         .subscribe(() => {
           this.navigationService.goTo(AtmState.MAIN_MENU);
           this.notificationService.notification$.next('Saving plan successfully created!')
         })
     }
     else if (this.transactionalPlan) {
-      this.atmHttpService.createTransactionalAccount(this.index, this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
+      this.atmHttpService.createTransactionalAccount(this.transactionalPlan.id, this.planForm.get('currency')!.value!, this.planForm.get('accountName')!.value!)
         .subscribe(() => {
           this.navigationService.goTo(AtmState.MAIN_MENU);
           this.notificationService.notification$.next('Transactional plan successfully created!')

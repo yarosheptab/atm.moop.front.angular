@@ -16,8 +16,8 @@ export interface SavingPlanPeriod {
 
 export interface PlansResponse {
   plans: {
-    saving: SavingPlan;
-    transactional: TransactionalPlan;
+    saving: SavingPlan[];
+    transactional: TransactionalPlan[];
   };
 }
 
@@ -134,7 +134,6 @@ export enum AtmState {
   CHOOSE_PLAN = 'Choose your plan',
   ACCOUNT_INFO = 'Account info',
   CHANGE_PIN = 'Change pin code',
-  CHANGE_ACCOUNT_PLAN = 'Change plan'
 }
 
 export enum CardStatus {

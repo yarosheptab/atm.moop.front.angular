@@ -23,17 +23,17 @@ export class AccountService {
 
   selectedAccount$ = new BehaviorSubject<Account | null>(null);
 
-  newPlan$ = new BehaviorSubject<{plan: SavingPlan | TransactionalPlan, index: number} | null>(null);
+  newPlan$ = new BehaviorSubject<SavingPlan | TransactionalPlan | null>(null);
 
   planType$ = new BehaviorSubject<AccountType | null>(null);
 
 constructor() {
   this.newPlan$.pipe(filter(plan => !!plan)).subscribe(
-    data => {
-      if (typeof (data?.plan as SavingPlan).additionAllowed == 'undefined') {
+    plan => {
+      if (typeof (plan as SavingPlan).additionAllowed == 'undefined') {
         this.planType$.next(AccountType.TRANSACTIONAL);
       }
-      else if (typeof (data?.plan as TransactionalPlan).creditMoneyAmount == 'undefined') {
+      else if (typeof (plan as TransactionalPlan).creditMoneyAmount == 'undefined') {
         this.planType$.next(AccountType.SAVING);
       }
     }
@@ -60,10 +60,6 @@ constructor() {
             this.stateName$.next(`Transactional account #${this.selectedAccount$.value?.id}`);
             break;
           }
-        return;
-      }
-      else if (state == AtmState.CHANGE_ACCOUNT_PLAN) {
-        this.stateName$.next(`Change for saving account #${this.selectedAccount$.value?.id}`);
         return;
       }
       this.stateName$.next(state);

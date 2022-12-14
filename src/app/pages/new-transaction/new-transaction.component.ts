@@ -24,7 +24,7 @@ export class NewTransactionComponent implements OnInit {
     amount: new FormControl(0, [Validators.required, Validators.min(1)]),
     receiverAccountId: new FormControl<number | null>(null, [Validators.required]),
     sendAt: new FormControl(false),
-    scheduledTime: new FormControl(new Date(), [Validators.required]),
+    scheduledTime: new FormControl(null, [Validators.required]),
     isRegular: new FormControl(false),
     period: new FormControl('', [Validators.required]),
     initialRepeats: new FormControl(null),

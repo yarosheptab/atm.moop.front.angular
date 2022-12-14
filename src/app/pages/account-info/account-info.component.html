@@ -34,15 +34,15 @@
         <span>Safe balance:</span>
         <span>{{(account$ | async).balance.amount}} {{(account$ | async).balance.currency}}</span>
       </div>
-      <div class="current-balance-section">
+      <div class="current-balance-section" *ngIf="(account$ | async).currentEstimatedAmount !== null">
         <span>Current balance:</span>
         <span>{{(account$ | async).currentEstimatedAmount}} {{(account$ | async).balance.currency}}</span>
       </div>
-      <div class="payments-left-section">
+      <div class="payments-left-section" *ngIf="(account$ | async).paymentStepsLeft !== null">
         <span>Payments left:</span>
         <span>{{(account$ | async).paymentStepsLeft}}</span>
       </div>
-      <div class="next-payment-section">
+      <div class="next-payment-section" *ngIf="(account$ | async).daysUntilNextPayment !== null">
         <span>Next payment in:</span>
         <span>{{(account$ | async).daysUntilNextPayment}} day(s)</span>
       </div>
@@ -55,16 +55,54 @@
         <span>{{(account$ | async).autorenewal ? 'Yes' : 'No'}}</span>
       </div>
     </button>
-    <app-account-plan-list-item fxFlex="40" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
+    <app-account-plan-list-item fxFlex="50" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
   </div>
   <div class="page-features" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
     <button (click)="openSettings(true)">Account settings/parameters</button>
   </div>
 </div>
 
-<div class="atm-account-settings" *ngIf="(account$ | async) && (isSettings$ | async)">
-  <app-account-plan-list-item fxFlex="40" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
-  <div class="page-features" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
+<div class="atm-account-settings" *ngIf="(account$ | async) && (isSettings$ | async) && !(isChoosingPlan$ | async)">
+  <div class="main-section">
+    <app-account-plan-list-item fxFlex="50" fxLayoutAlign="center" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
+    <div class="edit-plan-btns">
+      <button
+        [disabled]="(account$ | async).accountStatus !== ACCOUNT_STATUSES.OK"
+        (click)="changeAccountPlan()"
+      >
+        Change saving plan
+      </button>
+      <button
+        *ngIf="!isPlain && (account$ | async).accountStatus === ACCOUNT_STATUSES.OK"
+        (click)="fireContract()"
+      >
+        Fire saving contract
+      </button>
+      <button
+        *ngIf="!isPlain && (account$ | async).accountStatus === ACCOUNT_STATUSES.ACCUMULATING"
+        (click)="terminateContract()"
+      >
+        Terminate saving contract
+      </button>
+    </div>
+  </div>
+  <div class="page-features" fxLayoutAlign="flex-end center"  *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
     <button (click)="openSettings(false)">Account information</button>
+  </div>
+</div>
+
+<div class="atm-change-saving-plan" *ngIf="(account$ | async) && (isSettings$ | async) && (isChoosingPlan$ | async)">
+  <div class="choose-plan-section" *ngIf="(savingPlans$ | async).length">
+    <app-account-plan-list-item
+      *ngFor="let plan of (savingPlans$ | async)"
+      fxFlex="50"
+      fxLayoutAlign="center"
+      [isCustomCallback]="true"
+      (customCallback)="onSelectNewPlan($event)"
+      [savingPlan]="plan"
+    ></app-account-plan-list-item>
+  </div>
+  <div class="page-features" fxLayoutAlign="flex-end center"  *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
+    <button (click)="openSettings(true)">Return to settings</button>
   </div>
 </div>

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AtmState, SavingPlan, TransactionalPlan } from 'src/app/interfaces/app.interfaces';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AtmState, SavingPlan, SavingPlanType, TransactionalPlan } from 'src/app/interfaces/app.interfaces';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
@@ -13,6 +13,9 @@ export class AccountPlanListItemComponent implements OnInit {
   @Input() transactionalPlan?: TransactionalPlan;
   @Input() savingPlan?: SavingPlan;
   @Input() index?: number;
+  @Input() isCustomCallback: boolean = false;
+
+  @Output() customCallback = new EventEmitter<SavingPlanType>();
 
   constructor(
     private accountService: AccountService
@@ -23,12 +26,16 @@ export class AccountPlanListItemComponent implements OnInit {
   }
 
   selectPlan() {
+    if (this.isCustomCallback && this.savingPlan) {
+      this.customCallback.emit(this.savingPlan?.id);
+      return;
+    }
     if (this.savingPlan) {
-      this.accountService.newPlan$.next({plan: this.savingPlan, index: this.index!});
+      this.accountService.newPlan$.next(this.savingPlan);
       this.accountService.atmState$.next(AtmState.NEW_ACCOUNT)
     }
     else if (this.transactionalPlan) {
-      this.accountService.newPlan$.next({plan: this.transactionalPlan, index: this.index!});
+      this.accountService.newPlan$.next(this.transactionalPlan);
       this.accountService.atmState$.next(AtmState.NEW_ACCOUNT)
     }
   }

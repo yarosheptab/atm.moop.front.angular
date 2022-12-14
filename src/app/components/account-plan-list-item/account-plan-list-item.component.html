@@ -26,6 +26,10 @@
       <span>Payment period:</span>
       <span>{{savingPlan.paymentStepPeriod.period}}</span>
     </div>
+    <div *ngIf="savingPlan.totalPeriod?.period">
+      <span>Current period:</span>
+      <span>{{savingPlan.totalPeriod?.period}}</span>
+    </div>
     <div>
       <span>Addition allowed:</span>
       <span>{{savingPlan.additionAllowed ? 'Yes' : 'No'}}</span>

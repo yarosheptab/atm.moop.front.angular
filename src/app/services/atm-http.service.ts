@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, from, lastValueFrom, Observable, of, tap } from 'rxjs';
-import { Account, AccountInfo, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, Transaction } from 'src/app/interfaces/app.interfaces';
+import { Account, AccountInfo, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, SavingPlanType, Transaction } from 'src/app/interfaces/app.interfaces';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from './utils.service';
 
@@ -111,5 +111,23 @@ constructor(
     const url = `${environment.backApi}/transaction/regular`;
 
     return this.http.post<void>(url, regularData);
+  }
+
+  terminateSavingPlan(id: number): Observable<Account> {
+    const url = `${environment.backApi}/account/saving/terminate-contract/${id}`;
+
+    return this.http.patch<Account>(url, {});
+  }
+
+  fireSavingPlan(id: number): Observable<Account> {
+    const url = `${environment.backApi}/account/saving/fire-contract/${id}`;
+
+    return this.http.patch<Account>(url, {});
+  }
+
+  changeSavingAccountPlan(accountId: number, planId: SavingPlanType): Observable<Account> {
+    const url = `${environment.backApi}/account/saving/change-plan/${accountId}/${planId}`;
+
+    return this.http.patch<Account>(url, {});
   }
 }
