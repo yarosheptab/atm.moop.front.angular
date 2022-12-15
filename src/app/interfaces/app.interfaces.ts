@@ -100,6 +100,7 @@ export interface Transaction {
   transactionType: TransactionType;
   modifyTime: number;
   id: number;
+  fee: number;
 }
 
 export enum AtmStatus {

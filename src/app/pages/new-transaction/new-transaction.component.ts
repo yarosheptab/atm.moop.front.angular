@@ -20,7 +20,7 @@ export class NewTransactionComponent implements OnInit {
   accounts: Account[] = [];
 
   transactionForm = this.fb.group({
-    senderAccountDd: new FormControl<number | null>(null, [Validators.required]),
+    senderAccountId: new FormControl<number | null>(null, [Validators.required]),
     amount: new FormControl(0, [Validators.required, Validators.min(1)]),
     receiverAccountId: new FormControl<number | null>(null, [Validators.required]),
     sendAt: new FormControl(false),
@@ -41,7 +41,7 @@ export class NewTransactionComponent implements OnInit {
     this.atmHttpService.getAllAccounts()
       .subscribe(accounts => {
         this.accounts = accounts;
-        this.transactionForm.patchValue({senderAccountDd: accounts[0].id}, {emitEvent: false})
+        this.transactionForm.patchValue({senderAccountId: accounts[0].id}, {emitEvent: false})
         this.transactionForm.get('scheduledTime')?.disable()
         this.transactionForm.get('period')?.disable();
         this.transactionForm.get('initialRepeats')?.disable();
@@ -101,7 +101,7 @@ export class NewTransactionComponent implements OnInit {
   sendTransfer() {
     this.atmHttpService.createNewTransferFromTransaction(
       this.transactionForm.get('amount')!.value!,
-      this.transactionForm.get('senderAccountDd')!.value!,
+      this.transactionForm.get('senderAccountId')!.value!,
       this.transactionForm.get('receiverAccountId')!.value!
     )
     .pipe(
@@ -124,7 +124,7 @@ export class NewTransactionComponent implements OnInit {
   sendScheduled() {
     this.atmHttpService.createScheduledTransaction(
       this.transactionForm.get('amount')!.value!,
-      this.transactionForm.get('senderAccountDd')!.value!,
+      this.transactionForm.get('senderAccountId')!.value!,
       this.transactionForm.get('receiverAccountId')!.value!,
       this.getSeconds(this.transactionForm.get('scheduledTime')!.value!) as number
     )
@@ -148,7 +148,7 @@ export class NewTransactionComponent implements OnInit {
   sendRegular() {
     const transactionData = {
       amount: this.transactionForm.get('amount')!.value!,
-      senderAccountId: this.transactionForm.get('senderAccountDd')!.value!,
+      senderAccountId: this.transactionForm.get('senderAccountId')!.value!,
       receiverAccountId: this.transactionForm.get('receiverAccountId')!.value!,
       scheduledTime: this.getSeconds(this.transactionForm.get('scheduledTime')!.value!) ?? null,
       period: this.transactionForm.get('period')!.value!,

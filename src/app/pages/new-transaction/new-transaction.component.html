@@ -5,18 +5,18 @@
   </div>
   <div class="new-transaction-form" [formGroup]="transactionForm" *ngIf="accounts.length">
     <div class="field-row">
-      <label for="senderAccountDd"><u>S</u>ender account:</label>
-      <select fxFlex="60" name="senderAccountDd" formControlName="senderAccountDd" id="senderAccountDd">
-        <option *ngFor="let account of accounts" [value]="account.id">{{account.accountName}}</option>
+      <label for="senderAccountId"><u>S</u>ender account:</label>
+      <select fxFlex="60" name="senderAccountId" formControlName="senderAccountId" id="senderAccountId">
+        <option *ngFor="let account of accounts" [value]="account.id">{{account.accountName}} #{{account.id}}</option>
       </select>
-      <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="transactionForm.get('senderAccountDd')?.invalid && transactionForm.get('senderAccountDd')?.touched">
-        <span *ngIf="transactionForm.get('senderAccountDd').errors?.['required']">
+      <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="transactionForm.get('senderAccountId')?.invalid && transactionForm.get('senderAccountId')?.touched">
+        <span *ngIf="transactionForm.get('senderAccountId').errors?.['required']">
           Required.
         </span>
       </div>
     </div>
     <div class="field-row">
-      <label for="amount"><u>A</u>mount:</label>
+      <label for="amount"><u>A</u>mount: {{acc}}</label>
       <input fxFlex="60" id="amount" formControlName="amount" type="number"/>
       <div class="error-border" fxFlex="100" fxLayoutAlign="flex-end center" *ngIf="transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched">
         <span *ngIf="transactionForm.get('amount').errors?.['min']">

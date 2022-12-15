@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { AtmState, Transaction } from 'src/app/interfaces/app.interfaces';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
 
@@ -18,8 +19,13 @@ export class TransactionsHistoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.atmHttpService.getTransactionsHistory()
-      .subscribe(transactions => {
+    forkJoin(
+      [
+        this.atmHttpService.getTransactionsHistory(),
+        this.atmHttpService.getAllAccounts(),
+      ]
+      )
+      .subscribe(([transactions, _]) => {
         this.transactionsHitory = transactions;
       })
   }

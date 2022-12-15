@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom, from, lastValueFrom, Observable, of, tap } from 'rxjs';
 import { Account, AccountInfo, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, SavingPlanType, Transaction } from 'src/app/interfaces/app.interfaces';
 import { environment } from 'src/environments/environment';
+import { AccountService } from './account.service';
 import { UtilsService } from './utils.service';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class AtmHttpService {
 
 constructor(
     private http: HttpClient,
+    private accountService: AccountService,
     private utilsService: UtilsService
 ) { }
 
@@ -36,7 +38,7 @@ constructor(
   getAllAccounts(): Observable<Account[]> {
     const url = `${environment.backApi}/account/all-my`;
 
-    return this.http.get<Account[]>(url);
+    return this.http.get<Account[]>(url).pipe(tap(accounts => this.accountService.allAccounts$.next(accounts)));
   }
 
   getAccountInfo(): Observable<AccountInfo> {

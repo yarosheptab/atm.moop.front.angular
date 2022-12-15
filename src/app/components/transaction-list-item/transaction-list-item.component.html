@@ -1,12 +1,14 @@
 <div class="transaction-info" *ngIf="transaction">
-  <button>
+  <button disabled>
     <div class="main-info">
-      <span>Transaction #{{transaction.id}}</span>
-      <span>Created: {{transaction.startTime | date : 'short'}}</span>
+      <span>#{{transaction.id}} | Status: {{transaction.transactionStatus}}</span>
+      <span>Type: <span [ngStyle]="{'color': transactionColor}">{{transaction.transactionType}}</span></span>
+      <span>Created: {{transaction.startTime | date : 'M/d/yy, HH:mm'}}</span>
     </div>
     <div class="additional-info">
       <span>From: {{transaction.fromAccount.id}}</span>
       <span>Amount: {{transaction.amount?.amount}} {{transaction.amount?.currency}}</span>
+      <span *ngIf="transaction.fee">Fee: {{transaction.fee}} {{transaction.amount?.currency}}</span>
       <span>To: {{transaction.toAccount.id}}</span>
     </div>
   </button>

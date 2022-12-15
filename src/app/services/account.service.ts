@@ -27,6 +27,8 @@ export class AccountService {
 
   planType$ = new BehaviorSubject<AccountType | null>(null);
 
+  allAccounts$ = new BehaviorSubject<Account[]>([]);
+
 constructor() {
   this.newPlan$.pipe(filter(plan => !!plan)).subscribe(
     plan => {
