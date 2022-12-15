@@ -57,8 +57,9 @@
     </button>
     <app-account-plan-list-item fxFlex="50" [disabled]="true" [savingPlan]="(account$ | async).savingAccountPlan"></app-account-plan-list-item>
   </div>
-  <div class="page-features" *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING">
-    <button (click)="openSettings(true)">Account settings/parameters</button>
+  <div class="page-features">
+    <button (click)="openAccountHistory()">Account history</button>
+    <button *ngIf="(account$ | async).accountType === ACCOUNT_TYPES.SAVING" (click)="openSettings(true)">Account settings/parameters</button>
   </div>
 </div>
 

@@ -121,4 +121,8 @@ export class AccountInfoComponent implements OnInit {
       })
   }
 
+  openAccountHistory() {
+    this.navigationService.goTo(AtmState.TRANSACTION_HISTORY);
+  }
+
 }

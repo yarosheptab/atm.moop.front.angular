@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { AtmState, Transaction } from 'src/app/interfaces/app.interfaces';
+import { AccountService } from 'src/app/services/account.service';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
 
 @Component({
@@ -14,14 +15,17 @@ export class TransactionsHistoryComponent implements OnInit {
 
   transactionsHitory?: Transaction[];
 
+  selectedAccount$ = this.accountService.selectedAccount$;
+
   constructor(
-    private atmHttpService: AtmHttpService
+    private atmHttpService: AtmHttpService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit() {
     forkJoin(
       [
-        this.atmHttpService.getTransactionsHistory(),
+        this.atmHttpService.getTransactionsHistory(this.selectedAccount$.value?.id),
         this.atmHttpService.getAllAccounts(),
       ]
       )

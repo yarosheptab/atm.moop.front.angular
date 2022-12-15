@@ -85,8 +85,10 @@ constructor(
     return this.http.post<void>(url, {amount});
   }
 
-  getTransactionsHistory(): Observable<Transaction[]> {
-    const url = `${environment.backApi}/transaction/history`;
+  getTransactionsHistory(accountId?: number): Observable<Transaction[]> {
+    let url = `${environment.backApi}/transaction/history`;
+
+    if (accountId) url += `/${accountId}`;
 
     return this.http.get<Transaction[]>(url);
   }
