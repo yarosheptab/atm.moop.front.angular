@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { AtmState, Transaction } from 'src/app/interfaces/app.interfaces';
+import { AtmState, ScheduledTransaction, Transaction } from 'src/app/interfaces/app.interfaces';
 import { AccountService } from 'src/app/services/account.service';
 import { AtmHttpService } from 'src/app/services/atm-http.service';
 
@@ -11,9 +11,12 @@ import { AtmHttpService } from 'src/app/services/atm-http.service';
 })
 export class TransactionsHistoryComponent implements OnInit {
 
+  @Input() isScheduledAndRegular = false;
+
   ATM_STATES = AtmState;
 
   transactionsHitory?: Transaction[];
+  scheduledTransactions?: ScheduledTransaction[];
 
   selectedAccount$ = this.accountService.selectedAccount$;
 
@@ -23,15 +26,28 @@ export class TransactionsHistoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    forkJoin(
-      [
-        this.atmHttpService.getTransactionsHistory(this.selectedAccount$.value?.id),
-        this.atmHttpService.getAllAccounts(),
-      ]
+    if (this.isScheduledAndRegular && this.selectedAccount$.value) {
+      forkJoin(
+        [
+          this.atmHttpService.getScheduledTransactions(this.selectedAccount$.value.id),
+          this.atmHttpService.getAllAccounts(),
+        ]
       )
-      .subscribe(([transactions, _]) => {
-        this.transactionsHitory = transactions;
-      })
+        .subscribe(([transactions, _]) => {
+          this.scheduledTransactions = transactions;
+        })
+    }
+    else {
+      forkJoin(
+        [
+          this.atmHttpService.getTransactionsHistory(this.selectedAccount$.value?.id),
+          this.atmHttpService.getAllAccounts(),
+        ]
+      )
+        .subscribe(([transactions, _]) => {
+          this.transactionsHitory = transactions;
+        })
+    }
   }
 
 }

@@ -64,6 +64,12 @@ constructor() {
           }
         return;
       }
+      else if (state == AtmState.TRANSACTION_HISTORY || state == AtmState.REGULAR_TRANSACTION_HISTORY) {
+        if (this.selectedAccount$.value) {
+          this.stateName$.next(`${state} for account #${this.selectedAccount$.value?.id}`);
+          return;
+        }
+      }
       this.stateName$.next(state);
     }
   );

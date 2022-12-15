@@ -13,3 +13,24 @@
     </div>
   </button>
 </div>
+
+<div class="transaction-scheduled-info" *ngIf="transactionSch">
+  <button disabled>
+    <div class="main-info">
+      <span>#{{transactionSch.id}} | Status: {{transactionSch.transactionStatus}}</span>
+      <span>Created: {{transactionSch.startTime | date : 'M/d/yy, HH:mm'}}</span>
+    </div>
+    <div class="primary-info">
+      <span *ngIf="transactionSch.initialRepeats">Initial repeats: {{transactionSch.initialRepeats}}</span>
+      <span *ngIf="transactionSch.initialRepeats">Repeats left: {{transactionSch.repeatsLeft}}</span>
+      <span *ngIf="!transactionSch.initialRepeats">Infinite repeat</span>
+      <span *ngIf="transactionSch.period">Repeats every {{transactionSch.period.period}}</span>
+    </div>
+    <div class="additional-info">
+      <span *ngIf="transactionSch.scheduledTime">Planned start: {{transactionSch.scheduledTime | date : 'M/d/yy, HH:mm'}}</span>
+      <span>Amount: {{transactionSch.amount?.amount}} {{transactionSch.amount?.currency}}</span>
+      <span>To: {{transactionSch.toAccount.id}}</span>
+      <button *ngIf="transactionSch.transactionStatus === SCHEDULED_STATUSES.SCHEDULED" (click)="cancelRegularTransaction()">Cancel</button>
+    </div>
+  </button>
+</div>

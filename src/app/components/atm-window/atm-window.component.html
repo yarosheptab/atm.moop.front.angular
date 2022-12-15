@@ -33,6 +33,9 @@
     <div *ngSwitchCase="ATM_STATES.TRANSACTION_HISTORY">
       <app-transactions-history></app-transactions-history>
     </div>
+    <div *ngSwitchCase="ATM_STATES.REGULAR_TRANSACTION_HISTORY">
+      <app-transactions-history [isScheduledAndRegular]="true"></app-transactions-history>
+    </div>
     <div *ngSwitchCase="ATM_STATES.CARD_INFO">
       <app-card-info></app-card-info>
     </div>

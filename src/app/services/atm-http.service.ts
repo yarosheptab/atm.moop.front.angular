@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, from, lastValueFrom, Observable, of, tap } from 'rxjs';
-import { Account, AccountInfo, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, SavingPlanType, Transaction } from 'src/app/interfaces/app.interfaces';
+import { Account, AccountInfo, AtmInfo, AtmStatus, Currencies, PlansResponse, SavingPlan, SavingPlanType, ScheduledTransaction, Transaction } from 'src/app/interfaces/app.interfaces';
 import { environment } from 'src/environments/environment';
 import { AccountService } from './account.service';
 import { UtilsService } from './utils.service';
@@ -91,6 +91,18 @@ constructor(
     if (accountId) url += `/${accountId}`;
 
     return this.http.get<Transaction[]>(url);
+  }
+
+  getScheduledTransactions(accountId: number): Observable<ScheduledTransaction[]> {
+    const url = `${environment.backApi}/transaction/regular/${accountId}`;
+
+    return this.http.get<ScheduledTransaction[]>(url);
+  }
+
+  cancelRegularTransaction(id: number): Observable<void> {
+    const url = `${environment.backApi}/transaction/regular/cancel/${id}`;
+
+    return this.http.patch<void>(url, {});
   }
 
   changePinCode(pin: string): Observable<void> {

@@ -103,6 +103,26 @@ export interface Transaction {
   fee: number;
 }
 
+export interface ScheduledTransaction {
+  transactionType: TransactionType.TRANSFERRING,
+  initialRepeats: number | null,
+  scheduledTime: number | null,
+  modifyTime: number | null,
+  id: number,
+  amount: BalanceInfo,
+  repeatsLeft: number | null,
+  period: SavingPlanPeriod | null,
+  toAccount: {id: number},
+  startTime: number,
+  transactionStatus: ScheduledTransactionStatus
+}
+
+export enum ScheduledTransactionStatus {
+  SCHEDULED = 'SCHEDULED',
+  CANCELED = 'CANCELED',
+  COMMITTED = 'COMMITTED'
+}
+
 export enum AtmStatus {
   IDLE = 'IDLE',
   DOWN = 'DOWN',
@@ -130,6 +150,7 @@ export enum AtmState {
   WITHDRAW = 'Withdraw',
   DEPOSIT = 'Deposit',
   TRANSACTION_HISTORY = 'Transaction history',
+  REGULAR_TRANSACTION_HISTORY = 'Scheduled transactions',
   CARD_INFO = 'Card info',
   NEW_ACCOUNT = 'New account',
   CHOOSE_PLAN = 'Choose your plan',

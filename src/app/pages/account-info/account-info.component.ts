@@ -125,4 +125,8 @@ export class AccountInfoComponent implements OnInit {
     this.navigationService.goTo(AtmState.TRANSACTION_HISTORY);
   }
 
+  openActiveTransactions() {
+    this.navigationService.goTo(AtmState.REGULAR_TRANSACTION_HISTORY);
+  }
+
 }

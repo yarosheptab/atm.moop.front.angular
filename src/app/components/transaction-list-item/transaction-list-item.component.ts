@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Transaction, TransactionType } from 'src/app/interfaces/app.interfaces';
+import { AtmState, ScheduledTransaction, ScheduledTransactionStatus, Transaction, TransactionType } from 'src/app/interfaces/app.interfaces';
 import { AccountService } from 'src/app/services/account.service';
+import { AtmHttpService } from 'src/app/services/atm-http.service';
+import { NavigationService } from 'src/app/services/navigation.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-transaction-list-item',
@@ -10,9 +13,15 @@ import { AccountService } from 'src/app/services/account.service';
 export class TransactionListItemComponent implements OnInit {
 
   @Input() transaction?: Transaction;
+  @Input() transactionSch?: ScheduledTransaction;
+
+  SCHEDULED_STATUSES = ScheduledTransactionStatus;
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private atmHttpService: AtmHttpService,
+    private navigationService: NavigationService,
+    private notificationService: NotificationService
   ) { }
 
   transactionColor = 'black';
@@ -42,5 +51,15 @@ export class TransactionListItemComponent implements OnInit {
     else if (isFrom) return 'red';
     else if (isTo) return 'lawngreen';
     else return 'black';
+  }
+
+  cancelRegularTransaction() {
+    if (!this.transactionSch) return;
+
+    this.atmHttpService.cancelRegularTransaction(this.transactionSch?.id)
+    .subscribe(() => {
+      this.navigationService.goTo(AtmState.ACCOUNT_INFO);
+      this.notificationService.notification$.next('Scheduled transaction successfully cancelled!')
+    });
   }
 }

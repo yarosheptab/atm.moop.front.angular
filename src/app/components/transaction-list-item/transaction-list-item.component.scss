@@ -1,9 +1,9 @@
-.transaction-info {
+.transaction-info, .transaction-scheduled-info {
     width: 100%;
     display: flex;
     justify-content: center;
 
-    button {
+    > button {
         width: 100%;
         height: 50px;
         display: flex;
@@ -12,14 +12,15 @@
         color: black;
         text-shadow: none;
 
-        .main-info, .additional-info {
+        .main-info, .primary-info, .additional-info {
             display: flex;
             width: 100%;
             justify-content: space-between;
-
-            span {
-                flex: 1 1 33%;
-            }
+            align-items: center;
         }
     }
+}
+
+.transaction-scheduled-info > button {
+    height: 80px;
 }
