@@ -46,7 +46,7 @@ export class AtmLoginComponent implements OnInit {
         this.loginForm.reset();
         this.accountService.cardNumber = null;
       }
-      this.loginForm.patchValue({cardNumber: '5169162679576631', pinCode: '6969'});
+      this.loginForm.patchValue({cardNumber: '', pinCode: ''});
       this.isVerified$.next(false);
     });
 
@@ -56,8 +56,6 @@ export class AtmLoginComponent implements OnInit {
   }
 
   submitAction() {
-    // this.loginForm.markAllAsTouched();
-
     if (this.loginForm.get('cardNumber')?.invalid ||
       (this.loginForm.get('pinCode')?.invalid && this.isVerified$.value) ||
       !this.selectedAtm$.value?.id) {
